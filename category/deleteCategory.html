@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </head>
 <body>
 <table border="1">
     <p id="delete"></p>
     <tr>
-        <td>name</td>
+        <td>Name</td>
         <td><input type="text" id="nameCategory"></td>
     </tr>
     <tr>
@@ -27,18 +28,15 @@
     })
     function getCategory(){
         $.ajax({
-            url:'https://storymd4.herokuapp.com/api/categories'+id,
+            url:'http://localhost:8080/api/categories'+id,
             method:'GET',
-            headers:{
-                Authorization: window.localStorage.getItem('TOKEN_KEY')
-            },
             contentType:'application/Json; charset=UTF-8',
             success: function (data){
                 $('#nameCategory').val(data.name);
                 return;
             },
             error: function (){
-                document.getElementById('delete').innerHTML = "country does not exist!!";
+                document.getElementById('delete').innerHTML = "category does not exist!!";
             }
         })
     }
@@ -47,7 +45,7 @@
             name : $('#name')
         }
         $.ajax({
-            url:'https://storymd4.herokuapp.com/api/categories'+id,
+            url:'http://localhost:8080/api/manager/categories/'+id,
             method:'DELETE',
             data: JSON.stringify(category),
             contentType:'application/Json; charset=UTF-8',
@@ -55,7 +53,7 @@
                 document.getElementById('delete').innerHTML = "delete_success!"
                 return;
             },error: function (){
-                document.getElementById('delete').innerHTML = "delete_failed"
+                document.getElementById('delete').innerHTML = "delete_failer"
             }
         })
     }

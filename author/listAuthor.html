@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+            integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 <body>
-<a href="createCategory.html">create category</a>
+<a href="createAuthor.html">create author</a>
 <table border="1">
     <thead>
     <tr>
@@ -20,29 +24,25 @@
     <tbody id="tbody"></tbody>
 </table>
 <script>
-    let url = "https://storymd4.herokuapp.com/api/categories";
-    $(document).ready(function () {
+    let url =  "http://localhost:8080/api/manager/countries";
+    $(document).ready(function (){
         showForm();
     })
-
-    function showForm() {
+    function showForm(){
         $.ajax({
-            url: url,
-            method: 'GET',
-            contentType: 'application/Json; charset=UTF-8',
-            headers:{
-                Authorization: window.localStorage.getItem('TOKEN_KEY')
-            },
-            success: function (data) {
+            url:url,
+            method:'GET',
+            contentType:'application/Json; charset=UTF-8',
+            success:function (data){
                 let drawTable = ''
                 for (let i = 0; i < data.length; i++) {
-                    console.log("data", data[i])
+                    console.log("data",data[i])
                     drawTable += `<tr>
 <td>${data[i].id}</td>
 <td>${data[i].name}</td>
  <td>${data[i].user.name}</td>
- <td><a href="deleteCategory.html?id=${data[i].id}">delete</a></td>
-  <td><a href="editCategory.html?id=${data[i].id}">edit</a></td>
+ <td><a href="deleteAuthor.html?id=${data[i].id}">delete</a></td>
+  <td><a href="editAuthor.html?id=${data[i].id}">edit</a></td>
 </tr>`
                 }
                 document.getElementById('tbody').innerHTML = drawTable

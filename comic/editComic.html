@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+<body>
+<table border="1">
+    <p id="edit"></p>
+    <tr>
+        <td>Name</td>
+        <td><input type="text" id="nameComic"></td>
+    </tr>
+    <tr>
+        <td>Comic</td>
+        <td><input type="text" id="linkComic"></td>
+    </tr>
+<!--    <tr>-->
+<!--        <td>Category</td>-->
+<!--        <td><input type="text" id="categoryComic"></td>-->
+<!--    </tr>-->
+    <tr>
+        <td> <button onclick="editComic()">Edit</button></td>
+        <td><a href="listComic.html">back</a></td>
+
+    </tr>
+</table>
+<script>
+    let query = window.location.search;
+    let id = new URLSearchParams(query).get("id");
+    $(document).ready(function (){
+        getComic();
+    })
+
+    function getComic(){
+        $.ajax({
+            url:'http://localhost:8080/api/comic/'+id,
+            method:'GET',
+            contentType:'application/Json; charset=UTF-8',
+            success: function (data){
+                $('#nameComic').val(data.name);
+                $('#linkComic').val(data.comic);
+                // $('#categoryComic').val(data.category);
+                return;
+            },
+            error: function (){
+                document.getElementById('delete').innerHTML = "Comic does not exist!!";
+            }
+        })
+    }
+    function editComic(){
+        let comic = {
+            name : $('#nameComic').val(),
+            comic : $('#linkComic').val()
+            // category : $('#categoryComic').val()
+        }
+        $.ajax({
+            url:'http://localhost:8080/api/comic/'+id,
+            method: 'PUT',
+            data:JSON.stringify(comic),
+            headers:{
+                Authorization:"Bearer" + window.localStorage.getItem('TOKEN_KEY')
+            },
+            contentType:'application/Json; charset=UTF-8',
+            success: function (){
+                document.getElementById('edit').innerHTML = "edit success!"
+                return;
+            },
+            error : function (){
+                document.getElementById('edit').innerHTML = "edit failed"
+            }
+        })
+    }
+
+
+</script>
+
+
+</body>
+</html>
