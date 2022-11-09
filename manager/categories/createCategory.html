@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+<body>
+<table border="1">
+    <p id="create"></p>
+    <tr>
+        <td>name</td>
+        <td><input type="text" id="nameCategories"></td>
+
+    </tr>
+
+    <tr>
+        <td>
+            <button id="button">create</button>
+        </td>
+        <td><a href="listCategory.html">back</a></td>
+    </tr>
+</table>
+<script>
+    $(document).ready(function () {
+        $('#button').click(function () {
+            let nameCategories = {
+                name: $('#nameCategories').val(),
+            }
+            console.log(JSON.stringify(nameCategories))
+            $.ajax({
+                url: 'https://storymd4.herokuapp.com/api/categories',
+                method: 'POST',
+                headers: {
+                    Authorization: window.localStorage.getItem('TOKEN_KEY')
+                },
+                contentType: 'application/Json; charset=UTF-8',
+                data: JSON.stringify(nameCategories),
+                success: function () {
+                    document.getElementById('create').innerHTML = "create success!"
+                    return;
+                },
+                error: function () {
+                    document.getElementById('create').innerHTML = "failed "
+                }
+            })
+
+        })
+    })
+</script>
+</body>
+</html>
