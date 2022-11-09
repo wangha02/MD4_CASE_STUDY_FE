@@ -59,7 +59,7 @@
                             </div>
 
                             <div>
-                                <button onclick="index()" class="btn btn-outline-light btn-lg px-5" type="button">
+                                <button onclick="login()" class="btn btn-outline-light btn-lg px-5" type="button">
                                     Login
                                 </button>
                             </div>
@@ -87,7 +87,7 @@
 
     function actionLogin(data) {
         $.ajax({
-            url: "http://localhost:8080/api/auth/signin",
+            url: "https://storymd4.herokuapp.com/api/auth/signin",
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data),

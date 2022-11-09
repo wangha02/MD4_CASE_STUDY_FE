@@ -348,7 +348,7 @@
 
     function actionRegister(data) {
         $.ajax({
-            url: "http://localhost:8080/api/auth/signup",
+            url: "https://storymd4.herokuapp.com/api/auth/signup",
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(data),
@@ -362,7 +362,7 @@
     }
 
     function successRegis() {
-        window.location.href = "login.html";
+        window.location.href = "index.html";
         alert("đăng ký thành công");
     }
 
