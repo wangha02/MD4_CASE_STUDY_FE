@@ -40,8 +40,8 @@
             method:'GET',
             contentType:'application/Json; charset=UTF-8',
             success: function (data){
-                $('#nameComic').val(data.name);
-                $('#linkComic').val(data.comic);
+                $('#nameComic').val(data.name)
+                $('#linkComic').val(data.comic)
                 // $('#categoryComic').val(data.category);
                 return;
             },
@@ -51,7 +51,7 @@
         })
     }
     function editComic(){
-        let comic = {
+        let CoMic = {
             name : $('#nameComic').val(),
             comic : $('#linkComic').val()
             // category : $('#categoryComic').val()
@@ -59,7 +59,7 @@
         $.ajax({
             url:'http://localhost:8080/api/comic/'+id,
             method: 'PUT',
-            data:JSON.stringify(comic),
+            data:JSON.stringify(CoMic),
             headers:{
                 Authorization:"Bearer" + window.localStorage.getItem('TOKEN_KEY')
             },

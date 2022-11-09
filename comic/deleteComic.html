@@ -16,48 +16,60 @@
         <td><input type="text" id="nameComic"></td>
     </tr>
     <tr>
+        <td>Comic</td>
+        <td><input type="text" id="linkComic"></td>
+    </tr>
+<!--    <tr>-->
+<!--        <td>Category</td>-->
+<!--        <td><input type="text" id="nameCategory"></td>-->
+<!--    </tr>-->
+    <tr>
         <td>
-            <button onclick="deleteComic()">delete</button>
+            <button onclick="deleteComic()">Delete</button>
         </td>
-        <td><a href="listComic.html">back list</a></td>
+        <td><a href="listComic.html">Back list</a></td>
 
     </tr>
     <script>
         let query = window.location.search;
         let id = new URLSearchParams(query).get("id");
         console.log(id)
-        $(document).ready(function () {
+        $(document).ready(function (){
             getComic()
         })
-
-        function getComic() {
+        function getComic(){
             $.ajax({
-                url: 'http://localhost:8080/api/comic' + id,
-                method: 'GET',
-                contentType: 'application/Json; charset=UTF-8',
-                success: function (data) {
+                url:'http://localhost:8080/api/comic/'+id,
+                method:'GET',
+                contentType:'application/Json; charset=UTF-8',
+                headers:{
+                    Authorization:"Bearer" + window.localStorage.getItem('TOKEN_KEY')
+                },
+                success: function (data){
                     $('#nameComic').val(data.name);
+                    $('#linkComic').val(data.comic);
                     return;
                 },
-                error: function () {
+                error: function (){
                     document.getElementById('delete').innerHTML = "comic does not exist!!";
                 }
             })
         }
 
-        function deleteComic() {
-            let comic = {
-                name: $('#name')
+        function deleteComic(){
+            let film = {
+                name : $('#name'),
+                comic : $('#comic')
             }
             $.ajax({
-                url: 'http://localhost:8080/api/comic' + id,
-                method: 'DELETE',
-                data: JSON.stringify(comic),
-                contentType: 'application/Json; charset=UTF-8',
-                success: function comic() {
+                url:'http://localhost:8080/api/comic/'+id,
+                method:'DELETE',
+                data: JSON.stringify(film),
+                contentType:'application/Json; charset=UTF-8',
+                success:function film(){
                     document.getElementById('delete').innerHTML = "delete_success!"
                     return;
-                }, error: function () {
+                },error: function (){
                     document.getElementById('delete').innerHTML = "delete_failed"
                 }
             })

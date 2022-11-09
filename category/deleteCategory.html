@@ -28,7 +28,7 @@
     })
     function getCategory(){
         $.ajax({
-            url:'http://localhost:8080/api/categories'+id,
+            url:'http://localhost:8080/api/categories/'+id,
             method:'GET',
             contentType:'application/Json; charset=UTF-8',
             success: function (data){
@@ -45,8 +45,11 @@
             name : $('#name')
         }
         $.ajax({
-            url:'http://localhost:8080/api/manager/categories/'+id,
+            url:'http://localhost:8080/api/categories/'+id,
             method:'DELETE',
+            headers:{
+                Authorization:"Bearer" + window.localStorage.getItem('TOKEN_KEY')
+            },
             data: JSON.stringify(category),
             contentType:'application/Json; charset=UTF-8',
             success:function category(){
