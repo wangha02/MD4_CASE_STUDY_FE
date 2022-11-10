@@ -30,7 +30,7 @@ $(document).ready(function (){
         }
         console.log(JSON.stringify(nameCountry))
         $.ajax({
-            url:'http://localhost:8080/api/manager/countries',
+            url:'http://localhost:8080/api/authors',
             method:'POST',
             headers:{
                 Authorization: "Bearer " + window.localStorage.getItem('TOKEN_KEY')

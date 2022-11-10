@@ -27,7 +27,7 @@
     })
     function getCountry(){
         $.ajax({
-            url:'http://localhost:8080/api/manager/countries/'+id,
+            url:'http://localhost:8080/api/authors/'+id,
             method:'GET',
             contentType:'application/Json; charset=UTF-8',
             success: function (data){
@@ -44,7 +44,7 @@
             name : $('#name')
         }
         $.ajax({
-            url:'http://localhost:8080/api/manager/countries/'+id,
+            url:'http://localhost:8080/api/authors/'+id,
             method:'DELETE',
             data: JSON.stringify(author),
             contentType:'application/Json; charset=UTF-8',

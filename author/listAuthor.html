@@ -24,7 +24,7 @@
     <tbody id="tbody"></tbody>
 </table>
 <script>
-    let url =  "http://localhost:8080/api/manager/countries";
+    let url =  "http://localhost:8080/api/authors";
     $(document).ready(function (){
         showForm();
     })
@@ -32,6 +32,9 @@
         $.ajax({
             url:url,
             method:'GET',
+            headers: {
+                Authorization: "Bearer" + window.localStorage.getItem('TOKEN_KEY')
+            },
             contentType:'application/Json; charset=UTF-8',
             success:function (data){
                 let drawTable = ''
@@ -40,7 +43,6 @@
                     drawTable += `<tr>
 <td>${data[i].id}</td>
 <td>${data[i].name}</td>
- <td>${data[i].user.name}</td>
  <td><a href="deleteAuthor.html?id=${data[i].id}">delete</a></td>
   <td><a href="editAuthor.html?id=${data[i].id}">edit</a></td>
 </tr>`
