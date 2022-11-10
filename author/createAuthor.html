@@ -13,7 +13,7 @@
     <p id="create"></p>
     <tr>
         <td>name</td>
-        <td><input type="text"id="nameCountry"></td>
+        <td><input type="text"id="nameAuthor"></td>
 
     </tr>
 
@@ -25,18 +25,18 @@
 <script>
 $(document).ready(function (){
     $('#button').click(function (){
-        let nameCountry = {
-            name :$('#nameCountry').val()
+        let nameAuthor = {
+            name :$('#nameAuthor').val()
         }
-        console.log(JSON.stringify(nameCountry))
+        console.log(JSON.stringify(nameAuthor))
         $.ajax({
-            url:'http://localhost:8080/api/manager/countries',
+            url:'http://localhost:8080/api/authors',
             method:'POST',
             headers:{
                 Authorization: "Bearer " + window.localStorage.getItem('TOKEN_KEY')
             },
             contentType:'application/Json; charset=UTF-8',
-            data: JSON.stringify(nameCountry),
+            data: JSON.stringify(nameAuthor),
             success:function (){
                 document.getElementById('create').innerHTML = "create success!"
                 return;

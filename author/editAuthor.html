@@ -10,10 +10,10 @@
     <p id="edit"></p>
     <tr>
         <td>name</td>
-        <td><input type="text" id="nameCountry"></td>
+        <td><input type="text" id="nameAuthor"></td>
     </tr>
     <tr>
-        <td> <button onclick="editCountry()">edit</button></td>
+        <td> <button onclick="editAuthor()">edit</button></td>
         <td><a href="listAuthor.html">back</a></td>
     </tr>
 </table>
@@ -21,18 +21,18 @@
     let query = window.location.search;
     let id = new URLSearchParams(query).get("id");
     $(document).ready(function (){
-getCountry();
+getAuthor();
 
 
 
     })
-    function getCountry(){
+    function getAuthor(){
         $.ajax({
-            url:'http://localhost:8080/api/manager/countries/'+id,
+            url:'http://localhost:8080/api/authors/'+id,
             method:'GET',
             contentType:'application/Json; charset=UTF-8',
             success: function (data){
-                $('#nameCountry').val(data.name);
+                $('#nameAuthor').val(data.name);
                 return;
             },
             error: function (){
@@ -40,21 +40,24 @@ getCountry();
             }
         })
     }
-    function editCountry(){
+    function editAuthor(){
         let author = {
-            name : $('#nameCountry').val()
+            name : $('#nameAuthor').val()
         }
         $.ajax({
-            url:'http://localhost:8080/api/manager/countries/'+id,
+            url:'http://localhost:8080/api/authors/'+id,
             method: 'PUT',
             data:JSON.stringify(author),
             contentType:'application/Json; charset=UTF-8',
+            headers:{
+                Authorization:"Bearer" + window.localStorage.getItem('TOKEN_KEY')
+            },
             success: function (){
                 document.getElementById('edit').innerHTML = "edit success!"
                 return;
             },
             error : function (){
-                document.getElementById('edit').innerHTML = "edit failer"
+                document.getElementById('edit').innerHTML = "edit failed"
             }
         })
     }

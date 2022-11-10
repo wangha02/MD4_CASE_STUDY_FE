@@ -33,6 +33,9 @@
             url:url,
             method:'GET',
             contentType:'application/Json; charset=UTF-8',
+            headers:{
+                Authorization:"Bearer" + window.localStorage.getItem('TOKEN_KEY')
+            },
             success:function (data){
                 let drawTable = ''
                 for (let i = 0; i < data.length; i++) {
@@ -40,7 +43,6 @@
                     drawTable += `<tr>
 <td>${data[i].id}</td>
 <td>${data[i].name}</td>
- <td>${data[i].user.name}</td>
  <td><a href="deleteAuthor.html?id=${data[i].id}">delete</a></td>
   <td><a href="editAuthor.html?id=${data[i].id}">edit</a></td>
 </tr>`
