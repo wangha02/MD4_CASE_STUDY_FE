@@ -33,7 +33,7 @@
 
   function getCategory() {
     $.ajax({
-      url: 'http://localhost:8080/api/categories' + id,
+      url: 'http://localhost:8080/api/categories/'+id,
       method: 'GET',
       headers:{
         Authorization:"Bearer" + window.localStorage.getItem('TOKEN_KEY')
@@ -54,8 +54,11 @@
       name: $('#nameCategory').val()
     }
     $.ajax({
-      url: 'http://localhost:8080/api/categories' + id,
+      url: 'http://localhost:8080/api/categories/'+ id,
       method: 'PUT',
+      headers:{
+        Authorization:"Bearer" + window.localStorage.getItem('TOKEN_KEY')
+      },
       data: JSON.stringify(category),
       contentType: 'application/Json; charset=UTF-8',
       success: function () {
