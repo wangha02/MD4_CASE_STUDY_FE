@@ -10,10 +10,10 @@
     <p id="delete"></p>
     <tr>
         <td>name</td>
-        <td><input type="text" id="nameCountry"></td>
+        <td><input type="text" id="nameAuthor"></td>
     </tr>
     <tr>
-        <td><button onclick="deleteCountry()">delete</button></td>
+        <td><button onclick="deleteAuthor()">delete</button></td>
         <td><a href="listAuthor.html">back list</a></td>
     </tr>
 </table>
@@ -23,15 +23,18 @@
     let id = new URLSearchParams(query).get("id");
     console.log(id)
     $(document).ready(function (){
-        getCountry()
+        getAuthor()
     })
-    function getCountry(){
+    function getAuthor(){
         $.ajax({
-            url:'http://localhost:8080/api/manager/countries/'+id,
+            url:'http://localhost:8080/api/authors/'+id,
             method:'GET',
+            headers: {
+                Authorization: "Bearer" + window.localStorage.getItem('TOKEN_KEY')
+            },
             contentType:'application/Json; charset=UTF-8',
             success: function (data){
-                $('#nameCountry').val(data.name);
+                $('#nameAuthor').val(data.name);
                 return;
             },
             error: function (){
@@ -39,13 +42,16 @@
             }
         })
     }
-    function deleteCountry() {
+    function deleteAuthor() {
         let author = {
             name : $('#name')
         }
         $.ajax({
-            url:'http://localhost:8080/api/manager/countries/'+id,
+            url:'http://localhost:8080/api/authors/'+id,
             method:'DELETE',
+            headers: {
+                Authorization: "Bearer" + window.localStorage.getItem('TOKEN_KEY')
+            },
             data: JSON.stringify(author),
             contentType:'application/Json; charset=UTF-8',
             success:function author(){

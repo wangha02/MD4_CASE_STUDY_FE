@@ -16,7 +16,6 @@
     <tr>
         <th>ID</th>
         <th>NAME</th>
-        <th>USER</th>
         <th>DELETE</th>
         <th>EDIT</th>
     </tr>
@@ -24,29 +23,31 @@
     <tbody id="tbody"></tbody>
 </table>
 <script>
-    let url =  "http://localhost:8080/api/manager/countries";
-    $(document).ready(function (){
+    let url = "http://localhost:8080/api/authors";
+    $(document).ready(function () {
         showForm();
     })
-    function showForm(){
+
+    function showForm() {
         $.ajax({
-            url:url,
-            method:'GET',
-            contentType:'application/Json; charset=UTF-8',
-            success:function (data){
+            url: url,
+            method: 'GET',
+            headers: {
+                Authorization: "Bearer" + window.localStorage.getItem('TOKEN_KEY')
+            },
+            contentType: 'application/Json; charset=UTF-8',
+            success: function (data) {
                 let drawTable = ''
                 for (let i = 0; i < data.length; i++) {
-                    console.log("data",data[i])
+                    console.log("data", data[i])
                     drawTable += `<tr>
 <td>${data[i].id}</td>
 <td>${data[i].name}</td>
- <td>${data[i].user.name}</td>
  <td><a href="deleteAuthor.html?id=${data[i].id}">delete</a></td>
   <td><a href="editAuthor.html?id=${data[i].id}">edit</a></td>
 </tr>`
                 }
                 document.getElementById('tbody').innerHTML = drawTable
-
             }
         })
     }
