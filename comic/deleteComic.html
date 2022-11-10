@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+            integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+<body>
+<table border="1">
+    <p id="delete"></p>
+    <tr>
+        <td>Name</td>
+        <td><input type="text" id="nameComic"></td>
+    </tr>
+    <tr>
+        <td>
+            <button onclick="deleteComic()">delete</button>
+        </td>
+        <td><a href="listComic.html">back list</a></td>
+
+    </tr>
+    <script>
+        let query = window.location.search;
+        let id = new URLSearchParams(query).get("id");
+        console.log(id)
+        $(document).ready(function () {
+            getComic()
+        })
+
+        function getComic() {
+            $.ajax({
+                url: 'http://localhost:8080/api/comic' + id,
+                method: 'GET',
+                contentType: 'application/Json; charset=UTF-8',
+                success: function (data) {
+                    $('#nameComic').val(data.name);
+                    return;
+                },
+                error: function () {
+                    document.getElementById('delete').innerHTML = "comic does not exist!!";
+                }
+            })
+        }
+
+        function deleteComic() {
+            let comic = {
+                name: $('#name')
+            }
+            $.ajax({
+                url: 'http://localhost:8080/api/comic' + id,
+                method: 'DELETE',
+                data: JSON.stringify(comic),
+                contentType: 'application/Json; charset=UTF-8',
+                success: function comic() {
+                    document.getElementById('delete').innerHTML = "delete_success!"
+                    return;
+                }, error: function () {
+                    document.getElementById('delete').innerHTML = "delete_failed"
+                }
+            })
+        }
+
+    </script>
+</table>
+</body>
+</html>
