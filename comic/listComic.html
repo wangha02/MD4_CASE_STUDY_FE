@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+            integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+<body>
+<a href="createComic.html">Create Comic</a>
+<table border="1">
+    <THEAD>
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>COMIC</th>
+        <th>CATEGORY</th>
+        <th>USERS</th>
+        <th>EDIT</th>
+        <th>DELETE</th>
+    </tr>
+    </THEAD>
+    <tbody id="tbody"></tbody>
+</table>
+<script>
+    let url = "http://localhost:8080/api/comic";
+    $(document).ready(function () {
+        showListComic();
+    })
+
+    function showListComic() {
+        $.ajax({
+            url: url,
+            method: 'GET',
+            headers: {
+                Authorization: "Bearer" + window.localStorage.getItem('TOKEN_KEY')
+            },
+            contentType: 'application/Json; charset=UTF-8',
+            success: function (data) {
+                let drawTable = ''
+                for (let i = 0; i < data.length; i++) {
+                    console.log("data",data[i])
+                    drawTable += `<tr>
+<td>${data[i].id}</td>
+<td>${data[i].name}</td>
+<td>${data[i].comic}</td>
+<td>${data[i].categories}</td>
+ <td>${data[i].user.name}</td>
+ <td><a href="deleteComic.html?id=${data[i].id}">Delete</a></td>
+  <td><a href="editComic.html?id=${data[i].id}">Edit</a></td>
+</tr>`
+                }
+                document.getElementById('tbody').innerHTML = drawTable
+            }, error: function (error) {
+                console.log("error", error)
+            }
+        })
+    }
+</script>
+</body>
+</html>

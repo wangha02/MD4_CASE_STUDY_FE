@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MD4</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="../fragment/include.js"></script>
+</head>
+<body>
+
+<div id="header"></div>
+
+<a href="login.html">Login</a>
+
+<h1>Register</h1>
+
+<div>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td><input type="text" id="name"></td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td><input type="text" id="username"></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input type="email" id="email"></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="password" id="password"></td>
+        </tr>
+        <tr>
+            <td><span style="color:red;margin-right: 5px;display: none" id="pass-not-match">&Chi;</span>Repeat Password
+            </td>
+            <td><input type="password" id="repeat-pass"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button id="btn-register">Register</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="footer"></div>
+
+<script>
+    $(function () {
+        validatePassword();
+
+        $('#btn-register').click(function () {
+            let password = $('#password').val();
+            if (password === $('#repeat-pass').val()) {
+                let register = {
+                    name: $('#name').val(),
+                    username: $('#username').val(),
+                    email: $('#email').val(),
+                    password: password
+                }
+                $.ajax({
+                    url: 'http://localhost:8080/api/auth/signup',
+                    method: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(register),
+                    success: function (response) {
+                        console.log("response === ", response)
+                    },
+                    error: function (error) {
+                        console.log("erorr === ", error)
+                    }
+                })
+            }
+        })
+
+    });
+
+    function validatePassword() {
+        let password = $('#password');
+        let repeat = $('#repeat-pass');
+        let blur = false;
+
+        let checkPassword = function () {
+            if (password.val().trim() !== '' && repeat.val().trim() !== '' && password.val() !== repeat.val()) {
+                $('#pass-not-match').show();
+                $('#btn-register').prop('disabled', true);
+            } else {
+                $('#pass-not-match').hide();
+                $('#btn-register').prop('disabled', false);
+            }
+        };
+
+        repeat.on('blur', function () {
+            checkPassword()
+            blur = true;
+        })
+
+        password.on('input', function () {
+            if (blur) {
+                checkPassword();
+            }
+        })
+
+        repeat.on('input', function () {
+            if (blur) {
+                checkPassword();
+            }
+        })
+    }
+
+</script>
+
+</body>
+</html>
+
+
+

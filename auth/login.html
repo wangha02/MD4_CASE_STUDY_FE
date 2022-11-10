@@ -1,0 +1,67 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MD4</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="../fragment/include.js"></script>
+</head>
+<body>
+
+<div id="header"></div>
+
+<h1>Login</h1>
+
+<div>
+    <table>
+        <tr>
+            <td>Username Or Email</td>
+            <td><input type="text" id="username"></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="password" id="password"></td>
+        </tr>
+        <tr>
+            <td>
+                <a href="register.html">Register</a>
+            </td>
+            <td>
+                <button id="btn-login">login</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    $(function () {
+        $('#btn-login').click(function () {
+            let loginData = {
+                username: $('#username').val(),
+                password: $('#password').val()
+            };
+            $.ajax({
+                url: 'http://localhost:8080/api/auth/signin',
+                method: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(loginData),
+                success: function (data) {
+                    console.log(data)
+                    window.localStorage.setItem('NAME_KEY', data.name);
+                    window.localStorage.setItem('AVATAR_KEY', data.avatar);
+                    window.localStorage.setItem('TOKEN_KEY', data.token);
+                    window.location.href = "../home-manager/home.html";
+                },
+                error: function (e) {
+
+                }
+            });
+        });
+    })
+</script>
+
+<div id="footer"></div>
+
+</body>
+</html>
+
